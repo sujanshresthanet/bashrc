@@ -1,0 +1,14 @@
+# prompt
+changes_in_branch() {
+    if [ -d .git ]; then
+        local branch_name=$(git symbolic-ref --short HEAD 2>/dev/null)
+        if [ "$branch_name" = "master" ]; then
+            echo -ne "\033[0;31m$(__git_ps1)\033[0m"
+        elif [ "$branch_name" = "develop" ]; then
+            echo -ne "\033[0;32m$(__git_ps1)\033[0m"
+        else
+            echo -ne "\033[38;2;134;223;50m$(__git_ps1)\033[0m"
+        fi
+    fi
+}
+PS1='\[\033[0;32m\]\[\033[0m\033[0;32m\]\u\[\033[0;36m\] @ \[\033[0m\]\[\033[38;2;110;173;38m\]\h \[\033[0m\]\[\033[0;36m\] \w\[\033[0m\]$(changes_in_branch)\n\[\033[0;32m\]└─\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\] ▶\[\033[0m\] '
